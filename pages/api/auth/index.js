@@ -7,9 +7,6 @@ export default async function handler(req, res) {
 
     await dbConnect()
 
-    if(method === "GET"){
-        res.json('worked')
-    }
 
     if(method === "POST"){
         try {
