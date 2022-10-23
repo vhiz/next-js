@@ -8,9 +8,9 @@ const login = () => {
   const [error, setError] = useState(false)
   const router = useRouter()
 
-  const handleClick = async(ctx)=>{
+  const handleClick = async()=>{
     try {
-      const res = await axios.post('http://localhost:3000/api/user', {email, password})
+      const res = await axios.post('http://localhost:3000/api/auth/login', {email, password})
       router.push(`/user/${res.data._id}`)
     } catch (error) {
       setError(true)
@@ -18,14 +18,23 @@ const login = () => {
   }
   return (
     <div>
+      <nav className="navbar bg-light">
+        <div className="contanier-fluid">
+          <a className="btn btn-primary" href="/">Signup</a>
+        </div>
+      </nav>
       <div className="mb-3">
         <h1>Login Page</h1>
-        <input placeholder="Email" className="form-control" onChange={(e)=> {
+        <div className="mb-3">
+        <input placeholder="Email" className="form-control" type='email' id='exampleInputEmail' onChange={(e)=> {
           return setEmail(e.target.value)
-        }}/>
-        <input placeholder="Password" className="form-control" onChange={(e)=>  {
+        }} required/>
+        </div>
+        <div className="mb-3">
+        <input placeholder="Password" type='password' className="form-control" id='exampleInputPassword' onChange={(e)=>  {
           return setPassword(e.target.value)
-        }} />
+        }} required/>
+        </div>
         <button onClick={handleClick} className ="btn btn-primary">Submit</button>
         {error && <span className="form-text">wrong input</span>}
       </div>

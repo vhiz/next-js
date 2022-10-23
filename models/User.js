@@ -5,7 +5,9 @@ const userSchema = new mongoose.Schema({
     email: {type: String, required: true},
     password: {type: String, required: true},
     isAdmin: {type: Boolean, default:false},
-    amount:{type: Number, }
+    transaction:[{text:{type:String}}],
+    amount:{type: Number, },
+    phoneno:{type:Number, required: true}
 }, {timestamps: true})
 
 

@@ -1,8 +1,8 @@
 import User from "../../../models/User"
 import dbConnect from "../../../utils/mongodb"
 import * as bcrypt from 'bcrypt'
-import * as jwt from 'jsonwebtoken'
-import cookie from 'cookie'
+import { sign } from "jsonwebtoken";
+import { serialize } from "cookie";
 export default async function handler(req, res) {
     const {method} = req
 
@@ -17,11 +17,15 @@ export default async function handler(req, res) {
             if(!validpass) return res.status(403).send('password wrong')
 
 
-            const token = jwt.sign({_id:user._id, isAdmin: user.isAdmin}, process.env.TOKEN, {expiresIn:"5h"})
-            res.setHeader("Set-Cookie", cookie.serialize('token', token,{
-                sameSite:'strict',
-                path: '/'
-            }))
+            // const token = sign({_id:user._id, isAdmin: user.isAdmin}, process.env.TOKEN, {expiresIn:"5h"})
+            // const serialised = serialize("OursiteJWT", token, {
+            //     httpOnly: true,
+            //     secure: process.env.NODE_ENV !== "development",
+            //     sameSite: "strict",
+            //     path: "/",
+            // });
+            
+            // res.setHeader("Set-Cookie", serialised);
             res.status(200).json(user)
         } catch (error) {
             res.status(500).json(error.message)
