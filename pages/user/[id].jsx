@@ -4,8 +4,10 @@ import { useRouter } from "next/router"
 import { useState } from "react"
 
 const User = ({user, params}) => {
-  const [amount , setAmount] =useState(null)
+  const [amount , setAmount] =useState("")
   const [error, setError] = useState(false)
+  const [amount1, setAmount1] = useState("")
+  const [error1, setError1] = useState(false)
 
   const router = useRouter()
   const handleClick = async()=>{
@@ -16,6 +18,15 @@ const User = ({user, params}) => {
       setError(true)
     }
   } 
+
+  const handelClick1 = async()=>{
+    try {
+      await axios.post(`http://localhost:3000/api/withdraw/${user._id}`, {amount1})
+      router.push(`/user/${user._id}`)
+    } catch (error) {
+      setError1(true)
+    }
+  }
  
   return (
     <div>
@@ -39,16 +50,28 @@ const User = ({user, params}) => {
           <h1>Deposit</h1>
           <div className="col-auto">
             <label htmlFor="exampleInputEmail" className="form-label">Amount</label>
-            <input type="text" className="form-control" id="inputNumber" min="1000" onChange={(e)=>{return setAmount(e.target.value)}} required/>
+            <input type="number" className="form-control" id="inputNumber" min="1000" onChange={(e)=>{return setAmount(e.target.value)}} required/>
           </div>
           <br />
           <div className="col-auto">
             <button type="submit" className="btn btn-primary" onClick={handleClick}>Deposit</button>
-            {error && <span className="form-text">wrong input</span>}
           </div>
+            <br />
+            {error && <span className="form-text">Input amount</span>}
         </div>
-        <div className="col">Column</div>
-        <div className="col">Column</div>
+        <div className="col">
+          <h1>Witdrawl</h1>
+          <div className="col-auto">
+            <label htmlFor="exampleInputEmail" className="form-label">Amount</label>
+            <input type="number" className="form-control" id="inputNumber" min="1000" onChange={(e)=>{return setAmount1(e.target.value)}} required/>
+          </div>
+          <br />
+          <div className="col-auto">
+            <button type="submit" className="btn btn-primary" onClick={handelClick1}>Withdrawl</button>
+          </div>
+          <br />
+          {error1 && <span className="form-text">Invalid details</span>}
+        </div>
         <div className="col">Column</div>
         </div>
       </div>
@@ -59,6 +82,7 @@ export const getServerSideProps = async ({params})=>{
 
   
   const res = await axios.get(`http://localhost:3000/api/user/${params}`)
+  console.log(res)
   return{
     props:{
       user: res.data

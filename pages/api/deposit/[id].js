@@ -10,11 +10,9 @@ export default async function handler (req, res){
             if(!user) return res.status(403).json('no user found')
             
             const balance = parseFloat(user.amount)
+            if(req.body.amount == "") return res.status(400).json('input amount')
             const amount = parseFloat(req.body.amount)
-            if(user.amount == "NaN"){
-                user.amount= 0
-                await user.save()
-            }
+
             const deposited = balance + amount
             user.amount = deposited
             const saved = await user.save()

@@ -5,10 +5,10 @@ import { useState } from 'react'
 
 
 const Home = ()=>{
-  const [email, setEmail] = useState(null)
-  const [password, setPassword] = useState(null)
-  const [name, setName] = useState(null)
-  const [phoneno, setPhoneno] = useState(null)
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [name, setName] = useState("")
+  const [phoneno, setPhoneno] = useState("")
   const [error, setError] = useState(false)
   const router = useRouter()
 

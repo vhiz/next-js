@@ -3,8 +3,8 @@ import { useRouter } from "next/router"
 import { useState } from "react"
 
 const login = () => {
-  const [email, setEmail] = useState(null)
-  const [password, setPassword] = useState(null)
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
   const [error, setError] = useState(false)
   const router = useRouter()
 
